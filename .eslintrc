@@ -24,7 +24,8 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "jsx-a11y"
     ],
     "rules": {
         "react/jsx-filename-extension": [0, { "extensions": [".js", ".jsx", ".tsx", ".ts"] }],
@@ -33,7 +34,8 @@
             "jsx": "never",
             "ts": "never",
             "tsx": "never"
-          }]
+          }],
+        "jsx-a11y/control-has-associated-label": 0
     },
     "settings": {
         "import/extensions": [

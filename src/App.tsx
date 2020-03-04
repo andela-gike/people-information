@@ -1,25 +1,17 @@
 import React from 'react';
-import './App.css';
+import NavHeader from './components/NavHeader';
+import PeopleTable from './components/Table';
+import Pagination from './components/Pagination';
+import './App.scss';
 
 const App: React.FC = () => (
   <div className="App">
-    <header className="App-header">
-      <p>
-          Edit
-        {' '}
-        <code>src/App.tsx</code>
-        {' '}
-and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-          Learn React
-      </a>
-    </header>
+    <NavHeader navClass="top-header" />
+    <section className="body-section">
+      <h1 className="people-header">People</h1>
+      <PeopleTable tableClass="people-info-view" />
+      <Pagination pageClass="people-list-count" />
+    </section>
   </div>
 );
 
