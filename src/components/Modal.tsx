@@ -1,5 +1,5 @@
 import React from 'react';
-import ActionButton from './Button';
+// import ActionButton from './Button';
 
 export interface Props {
   /** Display the modal component */
@@ -16,11 +16,11 @@ const ModalComponent: React.FC<Props> = ({ show, children }: Props) => {
     <div className={showHideClassName}>
       <section className="modal-main">
         {children}
-        <ActionButton
+        {/* <ActionButton
           buttonType="button"
           buttonClass="modal-action-btn"
           buttonName="Save"
-        />
+        /> */}
       </section>
     </div>
   );

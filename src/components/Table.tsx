@@ -1,15 +1,16 @@
 import React from 'react';
+// import OpenButton from './Button';
 
 export interface Props {
   /** The table name */
-  // tableName: string;
+  peopleInfo: Array<any>;
   /** The table class */
   tableClass: string,
 }
 
 const tableHeaderTitle = ['Name', 'Location', 'Email', 'Status'];
 
-const TableComponent: React.FC<Props> = ({ tableClass }: Props) => (
+const TableComponent: React.FC<Props> = ({ tableClass, peopleInfo }: Props) => (
   <table className={tableClass}>
     <thead className="people-table-header">
       <tr className="people-tb-title">
@@ -18,20 +19,25 @@ const TableComponent: React.FC<Props> = ({ tableClass }: Props) => (
       </tr>
     </thead>
     <tbody className="people-table-content">
-      <tr className="person-info-row">
-        <td className="person-info-col">Alanna Phaih</td>
-        <td className="person-info-col">Downtown</td>
-        <td className="person-info-col">alanna.p@gmil.com</td>
-        <td className="person-info-col">employed</td>
-        <td className="person-info-col"><button type="button">View</button></td>
-      </tr>
-      <tr className="person-info-row">
-        <td className="person-info-col">Alanna Phaih</td>
-        <td className="person-info-col">Downtown</td>
-        <td className="person-info-col">alanna.p@gmil.com</td>
-        <td className="person-info-col">employed</td>
-        <td className="person-info-col"><button type="button">View</button></td>
-      </tr>
+      {peopleInfo.length > 0 && peopleInfo.map((person) => (
+        <tr key={person.id}>
+          <td className="person-info-col">
+            {` ${person.name.first} ${person.name.last}`}
+          </td>
+          <td className="person-info-col">{person.location.country}</td>
+          <td className="person-info-col">{person.email}</td>
+          <td className="person-info-col">{person.Status}</td>
+          <td className="person-info-col">
+            {' '}
+moed
+            {/* <OpenButton
+              buttonName="View"
+              buttonClass="open-modal-btn"
+              buttonType="button"
+            /> */}
+          </td>
+        </tr>
+      ))}
     </tbody>
   </table>
 );

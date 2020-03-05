@@ -35,7 +35,8 @@
             "ts": "never",
             "tsx": "never"
           }],
-        "jsx-a11y/control-has-associated-label": 0
+        "jsx-a11y/control-has-associated-label": 0,
+        "react/prefer-stateless-function": 0
     },
     "settings": {
         "import/extensions": [
