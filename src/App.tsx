@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavHeader from './components/NavHeader';
 import PeopleTable from './components/Table';
 import Pagination from './components/Pagination';
+import Search from './components/UserLookup';
 import { PeopleUrl } from './constants';
 import Datalayer from './services/dataLayer';
 import './App.scss';
@@ -57,16 +58,21 @@ class App extends Component<any, AppState> {
     const pageDisplayItems = peopleData.slice(
       currentPage * pageSize, currentPage * pageSize + pageSize,
     );
+    const totalPeople = peopleData.length;
     return (
       <div className="App">
         <NavHeader navClass="top-header" />
         <section className="body-section">
           <h1 className="people-header">People</h1>
+          <Search searchClass="employee-search" searchValue="" />
           <PeopleTable tableClass="people-info-view" peopleInfo={pageDisplayItems} />
           <Pagination
             pageClass="people-list-count"
             goToNextPage={this.handleNextPageClick}
             goToPreviousPage={this.handlePrevPageClick}
+            totalRecords={totalPeople}
+            pageSize={pageSize}
+            leastPageCount={1}
           />
         </section>
       </div>

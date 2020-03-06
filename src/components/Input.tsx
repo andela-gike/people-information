@@ -5,9 +5,23 @@ export interface Props {
   inputValue: string;
   /** The input class */
   inputClass: string,
+
+  inputName?: string
+
+  handleChange?: (evt: any) => void
 }
-const InputComponent: React.FC<Props> = ({ inputValue, inputClass }: Props) => (
-  <input className={inputClass} value={inputValue} />
+const InputComponent: React.FC<Props> = (
+  {
+    inputValue, inputClass, inputName, handleChange,
+  }: Props,
+) => (
+  <input
+    className={inputClass}
+    value={inputValue}
+    name={inputName}
+    onChange={handleChange}
+    placeholder={inputName}
+  />
 );
 
 export default InputComponent;

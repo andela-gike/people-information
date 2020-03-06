@@ -5,10 +5,22 @@ export interface Props {
   /** The pagination class */
   pageClass: string,
   /** Method to go to previous page */
-  goToPreviousPage: () => void,
+  goToPreviousPage?: () => void,
   /** Method to go to next page */
-  goToNextPage : () => void
+  goToNextPage?: () => void
+  totalRecords: number,
+  pageSize: number,
+  leastPageCount: number
 }
+
+// const goToPage = (page: number) => {
+
+// };
+
+// useEffect(() => {
+//   goToPage(1);
+// });
+
 const PaginationComponent: React.FC<Props> = (
   { pageClass, goToPreviousPage, goToNextPage }: Props,
 ) => (
@@ -19,7 +31,7 @@ const PaginationComponent: React.FC<Props> = (
       buttonType="button"
       handleClick={goToPreviousPage}
     />
-    <span>1</span>
+    <ul />
     <ActionButton
       buttonClass="pagebutton"
       buttonName="Next Page"

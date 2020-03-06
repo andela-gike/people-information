@@ -36,6 +36,12 @@
             "tsx": "never"
           }],
         "jsx-a11y/control-has-associated-label": 0,
+        "jsx-a11y/label-has-associated-control": [
+            2,
+            {
+              "labelComponents": ["label"]
+            }
+          ],
         "react/prefer-stateless-function": 0
     },
     "settings": {

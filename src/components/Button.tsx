@@ -8,10 +8,12 @@ export interface Props {
   /**  Specify the button type */
   buttonType: 'button' | 'submit',
   /** Handle click event in button */
-  handleClick: () => void
+  handleClick?: () => void
 }
 const ButtonComponent: React.FC<Props> = (
-  { buttonName, buttonClass, handleClick }: Props,
+  {
+    buttonName, buttonClass, handleClick,
+  }: Props,
 ) => (
   <button
     className={buttonClass}
