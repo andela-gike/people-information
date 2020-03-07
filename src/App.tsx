@@ -11,6 +11,7 @@ interface AppState {
   peopleData: Array<any>
   currentPage: number,
   pageSize: number,
+  filteredPeople: Array<any>
   // pageDisplayItems: Array<any>
 }
 
@@ -21,6 +22,7 @@ class App extends Component<any, AppState> {
       peopleData: [],
       currentPage: 0,
       pageSize: 10,
+      filteredPeople: [],
     };
   }
 
@@ -32,6 +34,7 @@ class App extends Component<any, AppState> {
     const result = await Datalayer({ method: 'GET', url: PeopleUrl });
     this.setState({
       peopleData: result.data,
+      filteredPeople: result.data,
     });
   }
 
@@ -51,21 +54,40 @@ class App extends Component<any, AppState> {
     }));
   }
 
+  handleSearchUser = (value?: any) => {
+    const { peopleData } = this.state;
+
+    const newList = peopleData.filter((empl: any) => {
+      const lc = `${empl.name.first} ${empl.name.last}`.toLowerCase();
+      const filter = value.toLowerCase();
+      return lc.includes(filter);
+    });
+    this.setState({
+      filteredPeople: newList,
+    });
+  }
+
   render() {
     const {
-      peopleData, currentPage, pageSize,
+      filteredPeople, currentPage, pageSize,
     } = this.state;
-    const pageDisplayItems = peopleData.slice(
+    const pageDisplayItems = filteredPeople.slice(
       currentPage * pageSize, currentPage * pageSize + pageSize,
     );
-    const totalPeople = peopleData.length;
+    const totalPeople = filteredPeople.length;
     return (
       <div className="App">
         <NavHeader navClass="top-header" />
         <section className="body-section">
           <h1 className="people-header">People</h1>
-          <Search searchClass="employee-search" searchValue="" />
-          <PeopleTable tableClass="people-info-view" peopleInfo={pageDisplayItems} />
+          <Search
+            searchClass="employee-search"
+            handleSearchChange={this.handleSearchUser}
+          />
+          <PeopleTable
+            tableClass="people-info-view"
+            peopleInfo={pageDisplayItems}
+          />
           <Pagination
             pageClass="people-list-count"
             goToNextPage={this.handleNextPageClick}

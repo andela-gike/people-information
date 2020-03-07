@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface Props {
   /** The input value */
-  inputValue: string;
+  inputValue?: string;
   /** The input class */
   inputClass: string,
 

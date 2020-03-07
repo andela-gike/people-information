@@ -1,4 +1,7 @@
-import React, { useReducer } from 'react';
+/* eslint-disable consistent-return */
+import React, {
+  useReducer, useRef, useEffect, useCallback,
+} from 'react';
 import ActionButton from './Button';
 import InputField from './Input';
 
@@ -6,8 +9,8 @@ export interface Props {
   /** Display the modal component */
   show: boolean;
   /** The save modal action */
-  handleClose?: () => void,
-  personDetails: any
+  handleClose: () => void,
+  personDetails: [any]
 }
 
 interface FieldValue {
@@ -20,6 +23,23 @@ const reducer = (state: any, { field, value }: FieldValue) => ({
   [field]: value,
 });
 
+const useOuterClickNotifier = (onOuterClick: any, innerRef: any) => {
+  useEffect(
+    () => {
+      const handleClickOut = (e: any) => innerRef.current
+        && !innerRef.current.contains(e.target)
+        && onOuterClick(e);
+      if (innerRef.current) { // add listener only, if element exists
+        document.addEventListener('click', handleClickOut);
+        // unmount previous listener first
+        return () => document.removeEventListener('click', handleClickOut);
+      }
+      // handleOuterClick();
+    },
+    [onOuterClick, innerRef],
+  );
+};
+
 const ModalComponent: React.FC<Props> = ({ show, handleClose, personDetails }: Props) => {
   const employeeInfo = personDetails[0];
   const initialUserInfo = {
@@ -28,6 +48,13 @@ const ModalComponent: React.FC<Props> = ({ show, handleClose, personDetails }: P
     location: employeeInfo.location.country,
     dob: employeeInfo.dob.date,
   };
+
+  const handleOuterClick = useCallback( // memoized callback for optimized performance
+    () => handleClose(),
+    [handleClose],
+  );
+  const innerRef = useRef(null);
+  useOuterClickNotifier(handleOuterClick, innerRef);
 
   const [state, dispatch] = useReducer(reducer, initialUserInfo);
   const {
@@ -38,12 +65,13 @@ const ModalComponent: React.FC<Props> = ({ show, handleClose, personDetails }: P
     dispatch({ field: evt.target.name, value: evt.target.value });
   };
 
+
   const showHideClassName = show ? 'modal display-block' : 'modal display-none';
   return (
     <div className={showHideClassName}>
       {personDetails.length > 0
         && (
-        <div className="modal-wrapper">
+        <div className="modal-wrapper" ref={innerRef}>
           <header className="modal-header">
             <h1>Employee</h1>
             <ActionButton
@@ -87,7 +115,7 @@ const ModalComponent: React.FC<Props> = ({ show, handleClose, personDetails }: P
                   />
                 </label>
                 <label htmlFor="location">
-                Location
+                  Location
                   <InputField
                     inputValue={location}
                     inputClass="user-form"

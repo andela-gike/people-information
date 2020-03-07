@@ -1,24 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Input from './Input';
 import SearchSVG from '../research.svg';
 
 export interface Props {
   /** The search value */
-  searchValue: string;
+  searchValue?: string;
   /** The search class */
   searchClass: string,
+  handleSearchChange: (value: string) => void
 }
-const UserLookupComponent: React.FC<Props> = ({ searchValue, searchClass }: Props) => {
-  const searchUser = () => {
+const UserLookupComponent: React.FC<Props> = (
+  { searchClass, handleSearchChange }: Props,
+) => {
+  const [searchName, setSearchName] = useState('');
 
+  const handleSearch = (evt: any) => {
+    setSearchName(evt.target.value);
+    handleSearchChange(evt.target.value);
   };
+
   return (
     <div className={searchClass}>
       <img alt="search-employee" src={SearchSVG} />
       <Input
         inputClass="search-input"
-        inputValue={searchValue}
-        handleChange={searchUser}
+        inputValue={searchName}
+        handleChange={handleSearch}
         inputName="Search People..."
       />
     </div>
