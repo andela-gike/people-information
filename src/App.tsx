@@ -69,6 +69,23 @@ class App extends Component<any, AppState> {
     });
   }
 
+  handleFilterByCategory = (value: string, cate: string) => {
+    const { peopleData } = this.state;
+    console.log(value, cate);
+
+    const filterList = peopleData.filter((emplo: any) => {
+      const lowerC = cate === 'location' ? emplo.location.country.toLowerCase() : emplo[cate].toLowerCase();
+      const filterValue = value.toLowerCase();
+      return lowerC === filterValue;
+    });
+
+    this.setState({
+      filteredPeople: filterList,
+    });
+
+    console.log(filterList);
+  }
+
   render() {
     const {
       filteredPeople, currentPage, pageSize, peopleData,
@@ -93,6 +110,7 @@ class App extends Component<any, AppState> {
                 <Filter
                   filterClass="filter-by-category"
                   employeeData={peopleData}
+                  handleFilterByCategory={this.handleFilterByCategory}
                 />
               </div>
               <PeopleTable

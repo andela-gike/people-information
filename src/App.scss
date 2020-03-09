@@ -31,8 +31,27 @@
   width: 30%;
 }
 
-.filter-section {
+.filter-section, .inner-cate{
   list-style: none;
+  position: absolute;
+  background-color: white;
+  border: 1px black solid;
+  text-align: left;
+  padding-left: 15px;
+  margin-top: 5px;
+}
+
+.filter-by-category {
+  margin-left: 5%;
+  border: 1px solid black;
+  text-align: center;
+  width: 6rem;
+  border-radius: 5px;
+  margin-bottom: 2%;
+}
+
+.lookup-employee{
+  display: flex
 }
 
 .employee-search {

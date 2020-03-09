@@ -26,7 +26,7 @@ const PaginationComponent: React.FC<Props> = (
     pageClass, goToPreviousPage, goToNextPage, totalRecords, pageSize,
   }: Props,
 ) => {
-  const pageCount = totalRecords / pageSize;
+  const pageCount = Math.ceil(totalRecords / pageSize);
   return (
     <div className={pageClass}>
       <ActionButton
