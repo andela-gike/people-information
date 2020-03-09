@@ -35,7 +35,6 @@ class App extends Component<any, AppState> {
 
   loadPeopleData = async () => {
     const result = await Datalayer({ method: 'GET', url: PeopleUrl });
-    console.log(result.message);
     if (result.message === 'Network Error') {
       this.setState({
         peopleData: [],
