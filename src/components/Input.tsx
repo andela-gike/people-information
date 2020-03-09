@@ -9,10 +9,11 @@ export interface Props {
   inputName?: string
 
   handleChange?: (evt: any) => void
+  labelledBy?: string
 }
 const InputComponent: React.FC<Props> = (
   {
-    inputValue, inputClass, inputName, handleChange,
+    inputValue, inputClass, inputName, handleChange, labelledBy,
   }: Props,
 ) => (
   <input
@@ -21,6 +22,7 @@ const InputComponent: React.FC<Props> = (
     name={inputName}
     onChange={handleChange}
     placeholder={inputName}
+    aria-labelledby={labelledBy}
   />
 );
 

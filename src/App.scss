@@ -19,6 +19,21 @@
     }
   }
 }
+.person-img-icon {
+  width: 40px;
+  border-radius: 50%;
+}
+
+.pagination-index {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  width: 30%;
+}
+
+.filter-section {
+  list-style: none;
+}
 
 .employee-search {
   display: flex;

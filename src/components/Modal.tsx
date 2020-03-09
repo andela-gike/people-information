@@ -4,6 +4,8 @@ import React, {
 } from 'react';
 import ActionButton from './Button';
 import InputField from './Input';
+import { PeopleUrl } from '../constants';
+import Datalayer from '../services/dataLayer';
 
 export interface Props {
   /** Display the modal component */
@@ -34,16 +36,17 @@ const useOuterClickNotifier = (onOuterClick: any, innerRef: any) => {
         // unmount previous listener first
         return () => document.removeEventListener('click', handleClickOut);
       }
-      // handleOuterClick();
     },
     [onOuterClick, innerRef],
   );
 };
 
-const ModalComponent: React.FC<Props> = ({ show, handleClose, personDetails }: Props) => {
+const ModalComponent: React.FC<Props> = ({
+  show, handleClose, personDetails,
+}: Props) => {
   const employeeInfo = personDetails[0];
   const initialUserInfo = {
-    address: `${employeeInfo.location.street.number} ${employeeInfo.location.street.name}`,
+    address: `${employeeInfo.location.street.number} ${employeeInfo.location.street.name}` || '',
     email: employeeInfo.email,
     location: employeeInfo.location.country,
     dob: employeeInfo.dob.date,
@@ -63,6 +66,40 @@ const ModalComponent: React.FC<Props> = ({ show, handleClose, personDetails }: P
 
   const handleFormInputChange = (evt: any) => {
     dispatch({ field: evt.target.name, value: evt.target.value });
+  };
+
+  const handleSubmitForm = async () => {
+    const result = await Datalayer(
+      {
+        method: 'PATCH',
+        url: `${PeopleUrl}/${employeeInfo.id}`,
+        data: {
+          email,
+          location: {
+            street: {
+              number: employeeInfo.location.street.number,
+              name: employeeInfo.location.street.name,
+            },
+            city: employeeInfo.location.city,
+            state: employeeInfo.location.state,
+            country: location,
+            postcode: employeeInfo.location.postcode,
+            coordinates: employeeInfo.location.coordinates,
+            timezone: employeeInfo.location.timezone,
+          },
+          dob: {
+            date: dob,
+          },
+        },
+      },
+    );
+    console.log(result, `${PeopleUrl}/${employeeInfo.id}`);
+    handleClose();
+  };
+
+  const formatDate = (empDOB: string) => {
+    const fullDate = new Date(empDOB);
+    return `${fullDate.getDate()}/${fullDate.getMonth() + 1}/${fullDate.getFullYear()}`;
   };
 
 
@@ -96,13 +133,14 @@ const ModalComponent: React.FC<Props> = ({ show, handleClose, personDetails }: P
             </div>
             <aside className="form-section">
               <form className="employee-form">
-                <label htmlFor="address">
+                <label htmlFor="address" id="address">
                   Address
                   <InputField
                     inputValue={address}
                     inputClass="user-form"
                     inputName="address"
                     handleChange={handleFormInputChange}
+                    labelledBy="address"
                   />
                 </label>
                 <label htmlFor="email">
@@ -126,7 +164,7 @@ const ModalComponent: React.FC<Props> = ({ show, handleClose, personDetails }: P
                 <label htmlFor="dob">
                   Date of Birth
                   <InputField
-                    inputValue={dob}
+                    inputValue={formatDate(dob)}
                     inputClass="user-form"
                     inputName="dob"
                     handleChange={handleFormInputChange}
@@ -137,7 +175,7 @@ const ModalComponent: React.FC<Props> = ({ show, handleClose, personDetails }: P
                 buttonType="button"
                 buttonClass="modal-action-btn"
                 buttonName="Save"
-                handleClick={handleClose}
+                handleClick={handleSubmitForm}
               />
             </aside>
           </section>

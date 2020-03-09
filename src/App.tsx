@@ -3,8 +3,10 @@ import NavHeader from './components/NavHeader';
 import PeopleTable from './components/Table';
 import Pagination from './components/Pagination';
 import Search from './components/UserLookup';
+import Filter from './components/Filter';
 import { PeopleUrl } from './constants';
 import Datalayer from './services/dataLayer';
+import LoadingAnimation from './loadingAnime.svg';
 import './App.scss';
 
 interface AppState {
@@ -69,7 +71,7 @@ class App extends Component<any, AppState> {
 
   render() {
     const {
-      filteredPeople, currentPage, pageSize,
+      filteredPeople, currentPage, pageSize, peopleData,
     } = this.state;
     const pageDisplayItems = filteredPeople.slice(
       currentPage * pageSize, currentPage * pageSize + pageSize,
@@ -78,25 +80,36 @@ class App extends Component<any, AppState> {
     return (
       <div className="App">
         <NavHeader navClass="top-header" />
-        <section className="body-section">
-          <h1 className="people-header">People</h1>
-          <Search
-            searchClass="employee-search"
-            handleSearchChange={this.handleSearchUser}
-          />
-          <PeopleTable
-            tableClass="people-info-view"
-            peopleInfo={pageDisplayItems}
-          />
-          <Pagination
-            pageClass="people-list-count"
-            goToNextPage={this.handleNextPageClick}
-            goToPreviousPage={this.handlePrevPageClick}
-            totalRecords={totalPeople}
-            pageSize={pageSize}
-            leastPageCount={1}
-          />
-        </section>
+        {peopleData.length === 0
+          ? <img alt="intial-load" src={LoadingAnimation} />
+          : (
+            <section className="body-section">
+              <h1 className="people-header">People</h1>
+              <div className="lookup-employee">
+                <Search
+                  searchClass="employee-search"
+                  handleSearchChange={this.handleSearchUser}
+                />
+                <Filter
+                  filterClass="filter-by-category"
+                  employeeData={peopleData}
+                />
+              </div>
+              <PeopleTable
+                tableClass="people-info-view"
+                peopleInfo={pageDisplayItems}
+                refreshPeopleData={this.loadPeopleData}
+              />
+              <Pagination
+                pageClass="people-list-count"
+                goToNextPage={this.handleNextPageClick}
+                goToPreviousPage={this.handlePrevPageClick}
+                totalRecords={totalPeople}
+                pageSize={pageSize}
+                leastPageCount={1}
+              />
+            </section>
+          )}
       </div>
     );
   }
