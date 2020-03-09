@@ -79,6 +79,25 @@
   text-align: left;
 }
 
+.open-modal-btn {
+  width: 60px;
+}
+
+.pagebutton, .open-modal-btn {
+  border-radius: 5px;
+  font-size: 16px;
+  height: 30px;
+}
+
+.person-info-col.name {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  span {
+    margin-left: 6%
+  }
+}
+
 .person-info-row {
   text-align: left;
 }
@@ -186,6 +205,9 @@
     .form-section {
       flex: 3;
       display: flex;
+      flex-direction: column;
+      padding-right: 1rem;
+      justify-content: space-between;
       .employee-form {
         display: flex;
         flex-direction: column;
@@ -213,7 +235,7 @@
         align-self: flex-end;
         height: 30px;
         width: 70px;
-        font-size: 14px;
+        font-size: 16px;
         border-radius: 5px;
         border: none;
         margin-bottom: 40px;
@@ -234,7 +256,10 @@ only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
   .App {
     .body-section {
-      padding-left: 5%;
+      padding-left: 3%;
+      .people-info-view {
+        width: 98%
+      }
     }
   }
   /* Force table to not be like tables anymore */
@@ -244,9 +269,22 @@ only screen and (max-width: 760px),
   .title-name, .person-info-col {
     padding: 0;
   }
+
+  .person-info-col.name {
+    height: 50px
+  }
   .person-info-col {
-    padding-left: 90px
+    padding-left: 90px;
 }
+
+  .person-info-col:last-child{
+    border-bottom: none;
+    padding-top: 10px;
+  }
+
+  .pagination-index {
+    padding-left: 0;
+  }
 
   /* Hide table headers (but not display: none;, for accessibility) */
   thead tr {
@@ -254,7 +292,10 @@ only screen and (max-width: 760px),
     top: -9999px;
     left: -9999px;
   }
-  tr { border: 1px solid #ccc; }
+  tr {
+    border: 1px solid #ccc;
+    height: 150px;
+  }
 
   td {
     /* Behave  like a "row" */
@@ -268,7 +309,6 @@ only screen and (max-width: 760px),
     /* Now like a table header */
     position: absolute;
     /* Top/left values mimic padding */
-    top: 6px;
     left: 6px;
     width: 45%;
     padding-right: 10px;
@@ -282,4 +322,56 @@ only screen and (max-width: 760px),
   td:nth-of-type(2):before { content: "Location"; }
   td:nth-of-type(3):before { content: "Email"; }
   td:nth-of-type(4):before { content: "Status"; }
+  td:nth-of-type(5):before { content: ""; }
+
+  .pagebutton, .open-modal-btn {
+    font-size: 14px;
+    height: 25px
+  }
+  .modal {
+    .modal-wrapper {
+      overflow: scroll;
+      .modal-main  {
+        flex-wrap: wrap;
+        flex: unset;
+        justify-content: center;
+        .name-section {
+          .details-slug {
+            justify-content: center;
+            width: 100%;
+          span {
+          padding-left: 0
+        }
+      }
+        }
+      }
+      .form-section {
+        flex: none;
+        padding-right: 0;
+        .employee-form {
+          height: 100%;
+          width: inherit;
+          padding-left: 0;
+          label {
+            display: flex;
+            flex-direction: column;
+            height: 70px;
+            justify-content: space-evenly;
+          }
+          .user-form {
+            height: 20px;
+            padding: 4px 7px;
+            font-size: 14px;
+            width: 200px;
+            border-radius: 5px;
+            background-color: white;
+            border: 1px solid black;
+          }
+        }
+        .modal-action-btn {
+          font-size: 14px;
+        }
+      }
+    }
+    }
 }

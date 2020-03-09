@@ -48,13 +48,13 @@ const TableComponent: React.FC<Props> = (
         <tbody className="people-table-content">
           {peopleInfo.length > 0 && peopleInfo.map((person) => (
             <tr key={person.id}>
-              <td className="person-info-col">
+              <td className="person-info-col name">
                 <img
                   alt="person-img"
                   src={person.picture.thumbnail}
                   className="person-img-icon"
                 />
-                {` ${person.name.first} ${person.name.last}`}
+                <span>{` ${person.name.first} ${person.name.last}`}</span>
               </td>
               <td className="person-info-col">{person.location.country}</td>
               <td className="person-info-col">{person.email}</td>

@@ -13,8 +13,8 @@ interface AppState {
   peopleData: Array<any>
   currentPage: number,
   pageSize: number,
-  filteredPeople: Array<any>
-  // pageDisplayItems: Array<any>
+  filteredPeople: Array<any>,
+  errorMessage: string
 }
 
 class App extends Component<any, AppState> {
@@ -25,6 +25,7 @@ class App extends Component<any, AppState> {
       currentPage: 0,
       pageSize: 10,
       filteredPeople: [],
+      errorMessage: '',
     };
   }
 
@@ -34,10 +35,19 @@ class App extends Component<any, AppState> {
 
   loadPeopleData = async () => {
     const result = await Datalayer({ method: 'GET', url: PeopleUrl });
-    this.setState({
-      peopleData: result.data,
-      filteredPeople: result.data,
-    });
+    console.log(result.message);
+    if (result.message === 'Network Error') {
+      this.setState({
+        peopleData: [],
+        filteredPeople: [],
+        errorMessage: result.message,
+      });
+    } else {
+      this.setState({
+        peopleData: result.data,
+        filteredPeople: result.data,
+      });
+    }
   }
 
   handlePrevPageClick = () => {
@@ -71,10 +81,10 @@ class App extends Component<any, AppState> {
 
   handleFilterByCategory = (value: string, cate: string) => {
     const { peopleData } = this.state;
-    console.log(value, cate);
 
     const filterList = peopleData.filter((emplo: any) => {
-      const lowerC = cate === 'location' ? emplo.location.country.toLowerCase() : emplo[cate].toLowerCase();
+      const lowerC = cate === 'location' ? emplo.location.country.toLowerCase()
+        : emplo[cate].toLowerCase();
       const filterValue = value.toLowerCase();
       return lowerC === filterValue;
     });
@@ -82,13 +92,11 @@ class App extends Component<any, AppState> {
     this.setState({
       filteredPeople: filterList,
     });
-
-    console.log(filterList);
   }
 
   render() {
     const {
-      filteredPeople, currentPage, pageSize, peopleData,
+      filteredPeople, currentPage, pageSize, peopleData, errorMessage,
     } = this.state;
     const pageDisplayItems = filteredPeople.slice(
       currentPage * pageSize, currentPage * pageSize + pageSize,
@@ -97,8 +105,16 @@ class App extends Component<any, AppState> {
     return (
       <div className="App">
         <NavHeader navClass="top-header" />
-        {peopleData.length === 0
-          ? <img alt="intial-load" src={LoadingAnimation} />
+        {peopleData.length === 0 && errorMessage.length > 0
+          ? (
+            <div className="loading-state">
+              <h1>
+                The employee information is not yet loaded,
+                if the process persist kindly check your internet connectivity
+              </h1>
+              <img alt="intial-load" src={LoadingAnimation} />
+            </div>
+          )
           : (
             <section className="body-section">
               <h1 className="people-header">People</h1>

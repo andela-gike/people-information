@@ -5,5 +5,5 @@ import App from '../App';
 test('renders people text', () => {
   const { getAllByText } = render(<App />);
   const linkElement = getAllByText(/People/i);
-  expect(linkElement).toHaveLength(1);
+  expect(linkElement).toHaveLength(2);
 });

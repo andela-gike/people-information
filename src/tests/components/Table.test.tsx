@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import Table from '../../components/Table';
 
 test('renders table content', () => {
@@ -22,10 +22,15 @@ test('renders table content', () => {
     Status: 'Employed',
   }];
 
-  // const openModal = jest.fn();
-  const { getByText } = render(<Table tableClass="test-table" peopleInfo={dummyUser} />);
+  const refreshPeopleData = jest.fn();
+  const { getByText } = render(<Table
+    tableClass="test-table"
+    peopleInfo={dummyUser}
+    refreshPeopleData={refreshPeopleData}
+  />);
   const linkElement = getByText(/name/i);
   expect(linkElement).toBeInTheDocument();
-  // fireEvent.click(getByText(/view/i));
+  fireEvent.click(getByText(/view/i));
+
   // expect(openModal).toHaveBeenCalledTimes(1);
 });

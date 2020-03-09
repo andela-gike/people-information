@@ -16,7 +16,6 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-scripts": "3.4.0",
-    "react-select-nested": "^1.0.5",
     "typescript": "~3.7.2"
   },
   "scripts": {
