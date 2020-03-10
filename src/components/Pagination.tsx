@@ -11,6 +11,7 @@ export interface Props {
   totalRecords: number,
   pageSize: number,
   leastPageCount: number
+  goToClickedPage: (pageIndex: number) => void
 }
 
 // const goToPage = (page: number) => {
@@ -24,6 +25,7 @@ export interface Props {
 const PaginationComponent: React.FC<Props> = (
   {
     pageClass, goToPreviousPage, goToNextPage, totalRecords, pageSize,
+    goToClickedPage,
   }: Props,
 ) => {
   const pageCount = Math.ceil(totalRecords / pageSize);
@@ -36,7 +38,15 @@ const PaginationComponent: React.FC<Props> = (
         handleClick={goToPreviousPage}
       />
       <ul className="pagination-index">
-        {[...Array(pageCount).keys()].map((page) => (<li key={page}>{page + 1}</li>))}
+        {Array.from({ length: pageCount }, (v, k) => k + 1).map((page) => (
+          <li
+            key={page}
+            onClick={() => goToClickedPage(page)}
+            role="presentation"
+          >
+            {page}
+          </li>
+        ))}
       </ul>
       <ActionButton
         buttonClass="pagebutton"

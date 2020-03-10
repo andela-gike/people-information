@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Input from './Input';
-import SearchSVG from '../research.svg';
+import SearchSVG from '../images/research.svg';
 
 export interface Props {
   /** The search value */

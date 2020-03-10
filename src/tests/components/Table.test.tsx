@@ -31,6 +31,6 @@ test('renders table content', () => {
   const linkElement = getByText(/name/i);
   expect(linkElement).toBeInTheDocument();
   fireEvent.click(getByText(/view/i));
-
-  // expect(openModal).toHaveBeenCalledTimes(1);
+  const modalText = getByText(/employee/i);
+  expect(modalText).toBeInTheDocument();
 });

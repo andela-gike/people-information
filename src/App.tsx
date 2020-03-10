@@ -6,7 +6,7 @@ import Search from './components/UserLookup';
 import Filter from './components/Filter';
 import { PeopleUrl } from './constants';
 import Datalayer from './services/dataLayer';
-import LoadingAnimation from './loadingAnime.svg';
+import LoadingAnimation from './images/loadingAnime.svg';
 import './App.scss';
 
 interface AppState {
@@ -22,7 +22,7 @@ class App extends Component<any, AppState> {
     super(props);
     this.state = {
       peopleData: [],
-      currentPage: 0,
+      currentPage: 1,
       pageSize: 10,
       filteredPeople: [],
       errorMessage: '',
@@ -113,18 +113,24 @@ class App extends Component<any, AppState> {
     });
   }
 
+  goToClickedPage = (pageIndex: number) => {
+    this.setState({
+      currentPage: pageIndex,
+    });
+  }
+
   render() {
     const {
       filteredPeople, currentPage, pageSize, peopleData, errorMessage,
     } = this.state;
-    const pageDisplayItems = filteredPeople.slice(
-      currentPage * pageSize, currentPage * pageSize + pageSize,
-    );
+    const indexOfLastEmpl = currentPage * pageSize;
+    const indexOfFirstEmpl = indexOfLastEmpl - pageSize;
+    const pageDisplayItems = filteredPeople.slice(indexOfFirstEmpl, indexOfLastEmpl);
     const totalPeople = filteredPeople.length;
     return (
       <div className="App">
         <NavHeader navClass="top-header" />
-        {peopleData.length === 0 && errorMessage.length > 0
+        {peopleData.length === 0 || errorMessage.length > 0
           ? (
             <div className="loading-state">
               <h1>
@@ -160,6 +166,7 @@ class App extends Component<any, AppState> {
                 totalRecords={totalPeople}
                 pageSize={pageSize}
                 leastPageCount={1}
+                goToClickedPage={this.goToClickedPage}
               />
             </section>
           )}

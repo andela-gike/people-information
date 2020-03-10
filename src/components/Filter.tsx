@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DownPointer from '../down-arrow.png';
+import DownPointer from '../images/down-arrow.png';
 
 export interface Props {
   /** The filter value */
