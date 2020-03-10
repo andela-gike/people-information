@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import DownPointer from '../down-arrow.png';
 
 export interface Props {
-  /** The search value */
+  /** The filter value */
   searchValue?: string;
-  /** The search class */
+  /** The filter class */
   filterClass: string,
   handleFilterByCategory: (value: string, cate: string) => void
   employeeData: Array<any>

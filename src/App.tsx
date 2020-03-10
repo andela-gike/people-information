@@ -33,6 +33,10 @@ class App extends Component<any, AppState> {
     this.loadPeopleData();
   }
 
+  /**
+   * Function makes an async endpoint call to get all
+   * employees data from the employee endpoint
+   */
   loadPeopleData = async () => {
     const result = await Datalayer({ method: 'GET', url: PeopleUrl });
     if (result.message === 'Network Error') {
@@ -49,12 +53,20 @@ class App extends Component<any, AppState> {
     }
   }
 
+  /**
+   * The function the move the current page in display back to the previous
+   * page
+   */
   handlePrevPageClick = () => {
     this.setState((prevState) => ({
       currentPage: prevState.currentPage > 0 ? prevState.currentPage - 1 : 0,
     }));
   }
 
+  /**
+   * The function the move the current page in display
+   * to the next page
+   */
   handleNextPageClick = () => {
     this.setState((prevState) => ({
       currentPage:
@@ -65,6 +77,10 @@ class App extends Component<any, AppState> {
     }));
   }
 
+  /**
+   * The function handle the search functionality
+   *  that look up an employee based in the employee's name
+   */
   handleSearchUser = (value?: any) => {
     const { peopleData } = this.state;
 
@@ -78,6 +94,10 @@ class App extends Component<any, AppState> {
     });
   }
 
+  /**
+   * The function handle the filter functionality
+   *  that filters and return employees that belong to a certain category
+   */
   handleFilterByCategory = (value: string, cate: string) => {
     const { peopleData } = this.state;
 

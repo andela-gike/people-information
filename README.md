@@ -35,3 +35,15 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+## Architecture
+I had a choice of choosing any framework from VueJS/React/Angular. Though I do have some experience with Angular and VueJS, my professional experience is in React. So I chose to use ReactJS. Since the challenge needed a lot of UI components I build most of the UI components from ground up without an external CSS library or package. Although the time spent to complete the project was more as to compare when using a CSS package. For state management, I chose to use react hooks and props inheritance, because the project is small.
+Finally, almost all the component are functional components for ease of testing and proper use of React hooks except the `App.tsx` file which is a class component. Finally, I had the option of choosing either `Typescript`/`Flowtype`/`Proptypes` for type checking, so I choose Typescript because it functions not only as type checking for the prop types for the entire project.
+
+## Mock backend
+I had a REST API client that feed me the information I needed. Ideally, I would have liked doing an express.js or hapi.js server running node as backend, but to be complete the project in time, I created a mock backend with [json-server](https://github.com/typicode/json-server) and hosted it with Heroku, the link to the server is [dummy-people](https://dummy-people-info.herokuapp.com/results). With this server running, I can perform any REST API request as needed.
+
+## Responsiveness and unit testing
+For responsiveness in some components, I practiced fluid design which gives the component the ability to scale based on the screen size. The application is also **Flexbox** based making the components to adjust based on the screen size. One thing to note in the **Table** component I had the choice of either `Squash/Vertical scroll/Collapse by rows/Collapse by columns`, I used **Collapse by rows** to make the table fit in a mobile screen.
+
+For testing, I made use of the `React-testing-library` to test my component and used coverage to generate the coverage for file and components that have been tested.
+

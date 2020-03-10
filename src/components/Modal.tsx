@@ -25,6 +25,12 @@ const reducer = (state: any, { field, value }: FieldValue) => ({
   [field]: value,
 });
 
+/**
+ *  A customized react hook that determines when a user clicks outside the
+ *  display modal
+ * @param onOuterClick
+ * @param innerRef
+ */
 const useOuterClickNotifier = (onOuterClick: any, innerRef: any) => {
   useEffect(
     () => {
