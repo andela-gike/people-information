@@ -40,6 +40,7 @@ const PaginationComponent: React.FC<Props> = (
       <ul className="pagination-index">
         {Array.from({ length: pageCount }, (v, k) => k + 1).map((page) => (
           <li
+            className="paginate-list"
             key={page}
             onClick={() => goToClickedPage(page)}
             role="presentation"

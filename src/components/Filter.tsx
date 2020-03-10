@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import DownPointer from '../images/down-arrow.png';
 
 export interface Props {
   /** The filter value */
@@ -52,30 +51,35 @@ const FilterComponent: React.FC<Props> = (
 
   return (
     <div className={filterClass}>
-      <span>Filter</span>
-      <img
-        alt="search-employee"
-        src={DownPointer}
-        onClick={handleOpenDropdown}
-        role="presentation"
-      />
+      <div className="filter-label">
+        <span
+          onClick={handleOpenDropdown}
+          role="presentation"
+        >
+          Filter
+          {openDropdown ? <span>&#9650;</span> : <span>&#9660;</span>}
+        </span>
+      </div>
       {openDropdown && (
         <ul className="filter-section">
           {filterItems.map((eachIte) => (
             <li className="filter-cate" key={eachIte.id} onClick={() => openStatus(eachIte.slugName)} role="presentation">
               {`Filter by ${eachIte.slugName}`}
               {(displayStat && (selectId === eachIte.slugName)) && (
-              <ul className="inner-cate">
-                  {eachIte.items.map((stat) => (
-                    <li
-                      key={stat}
-                      onClick={() => selectCategory(stat, eachIte.slugName)}
-                      role="presentation"
-                    >
-                      {stat}
-                    </li>
-                  ))}
-              </ul>
+                <>
+                  <div className="inner-cat" />
+                  <ul className="inner-cate">
+                    {eachIte.items.map((stat) => (
+                      <li
+                        key={stat}
+                        onClick={() => selectCategory(stat, eachIte.slugName)}
+                        role="presentation"
+                      >
+                        {stat}
+                      </li>
+                    ))}
+                  </ul>
+                </>
               )}
             </li>
           ))}
