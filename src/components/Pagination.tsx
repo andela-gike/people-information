@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ActionButton from './Button';
 
 export interface Props {
@@ -29,6 +29,13 @@ const PaginationComponent: React.FC<Props> = (
   }: Props,
 ) => {
   const pageCount = Math.ceil(totalRecords / pageSize);
+  const [activePage, setActivePage] = useState(1);
+  const isActive = (pgNum: number) => {
+    setActivePage(pgNum);
+    goToClickedPage(pgNum);
+  };
+  // const [showEllipsis, setShowEllipsis] = useState(true);
+  // const Ellipsis = showEllipsis ? (<li>...</li>) : '';
   return (
     <div className={pageClass}>
       <ActionButton
@@ -39,15 +46,19 @@ const PaginationComponent: React.FC<Props> = (
       />
       <ul className="pagination-index">
         {Array.from({ length: pageCount }, (v, k) => k + 1).map((page) => (
-          <li
-            className="paginate-list"
-            key={page}
-            onClick={() => goToClickedPage(page)}
-            role="presentation"
-          >
-            {page}
-          </li>
+          <>
+            <li
+              className={activePage === page
+                ? 'paginate-list active-page' : 'paginate-list'}
+              key={page}
+              onClick={() => isActive(page)}
+              role="presentation"
+            >
+              {page}
+            </li>
+          </>
         ))}
+        {/* {Ellipsis} */}
       </ul>
       <ActionButton
         buttonClass="pagebutton"

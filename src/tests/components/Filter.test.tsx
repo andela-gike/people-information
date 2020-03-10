@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import Filter from '../../components/Filter';
 
 const handleFilter = jest.fn();
@@ -19,6 +19,6 @@ const setUp = () => {
 test('renders render filter field', () => {
   const { filterSpan } = setUp();
   expect(filterSpan).toBeInTheDocument();
-  // fireEvent.change(input, { target: { value: 'ki' } });
+  fireEvent.click(filterSpan);
   // expect(input.value).toBe('ki');
 });

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
+import useOuterClickNotifier from '../hooks';
 
 export interface Props {
   /** The filter value */
@@ -17,13 +18,23 @@ const FilterComponent: React.FC<Props> = (
   const [selectId, setSelectId] = useState('');
   const handleOpenDropdown = () => {
     setOpenDropdown(!openDropdown);
+    setDisplayStat(false);
   };
+
+  const handleOuterClick = useCallback( // memoized callback for optimized performance
+    () => handleOpenDropdown(),
+    [handleOpenDropdown],
+  );
+  const innerRef = useRef(null);
+  useOuterClickNotifier(handleOuterClick, innerRef);
 
   const allCountries = new Set(employeeData.map((empl) => empl.location.country));
   const allGender = new Set(employeeData.map((empl) => empl.gender));
   const allStatus = new Set(employeeData.map((empl) => empl.Status));
 
   const selectCategory = (selectedCate: string, cateName: string) => {
+    setDisplayStat(!displayStat);
+    setOpenDropdown(!openDropdown);
     handleFilterByCategory(selectedCate, cateName);
   };
 
@@ -53,6 +64,7 @@ const FilterComponent: React.FC<Props> = (
     <div className={filterClass}>
       <div className="filter-label">
         <span
+          className="span-filter"
           onClick={handleOpenDropdown}
           role="presentation"
         >
@@ -61,7 +73,7 @@ const FilterComponent: React.FC<Props> = (
         </span>
       </div>
       {openDropdown && (
-        <ul className="filter-section">
+        <ul className="filter-section" ref={innerRef}>
           {filterItems.map((eachIte) => (
             <li className="filter-cate" key={eachIte.id} onClick={() => openStatus(eachIte.slugName)} role="presentation">
               {`Filter by ${eachIte.slugName}`}

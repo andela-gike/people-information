@@ -1,11 +1,11 @@
-/* eslint-disable consistent-return */
 import React, {
-  useReducer, useRef, useEffect, useCallback,
+  useReducer, useRef, useCallback,
 } from 'react';
 import ActionButton from './Button';
 import InputField from './Input';
 import { PeopleUrl } from '../constants';
 import Datalayer from '../services/dataLayer';
+import useOuterClickNotifier from '../hooks';
 
 export interface Props {
   /** Display the modal component */
@@ -25,27 +25,6 @@ const reducer = (state: any, { field, value }: FieldValue) => ({
   [field]: value,
 });
 
-/**
- *  A customized react hook that determines when a user clicks outside the
- *  display modal
- * @param onOuterClick
- * @param innerRef
- */
-const useOuterClickNotifier = (onOuterClick: any, innerRef: any) => {
-  useEffect(
-    () => {
-      const handleClickOut = (e: any) => innerRef.current
-        && !innerRef.current.contains(e.target)
-        && onOuterClick(e);
-      if (innerRef.current) { // add listener only, if element exists
-        document.addEventListener('click', handleClickOut);
-        // unmount previous listener first
-        return () => document.removeEventListener('click', handleClickOut);
-      }
-    },
-    [onOuterClick, innerRef],
-  );
-};
 
 const ModalComponent: React.FC<Props> = ({
   show, handleClose, personDetails,
