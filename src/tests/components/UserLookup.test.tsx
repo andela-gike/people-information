@@ -18,9 +18,6 @@ const setUp = () => {
 test('renders render search field', () => {
   const { input } = setUp();
   expect(input).toBeInTheDocument();
-  fireEvent.change(input, { target: { value: '23' } });
-  console.log(input.value);
-  // fireEvent.change(getByPlaceholderText(/search people.../i),
-  // { target: { value: 'Ko' } });
-  // expect(getByPlaceholderText(/search people.../i).value).toBe('ko');
+  fireEvent.change(input, { target: { value: 'ki' } });
+  expect(input.value).toBe('ki');
 });
