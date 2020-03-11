@@ -5,9 +5,9 @@ export interface Props {
   /** The pagination class */
   pageClass: string,
   /** Method to go to previous page */
-  goToPreviousPage?: () => void,
+  goToPreviousPage: () => void,
   /** Method to go to next page */
-  goToNextPage?: () => void
+  goToNextPage: () => void
   totalRecords: number,
   pageSize: number,
   leastPageCount: number
@@ -34,6 +34,16 @@ const PaginationComponent: React.FC<Props> = (
     setActivePage(pgNum);
     goToClickedPage(pgNum);
   };
+
+  const getToPrevious = () => {
+    setActivePage(activePage - 1);
+    goToPreviousPage();
+  };
+
+  const getToNext = () => {
+    setActivePage(activePage + 1);
+    goToNextPage();
+  };
   // const [showEllipsis, setShowEllipsis] = useState(true);
   // const Ellipsis = showEllipsis ? (<li>...</li>) : '';
   return (
@@ -42,29 +52,27 @@ const PaginationComponent: React.FC<Props> = (
         buttonClass="pagebutton"
         buttonName="Previous Page"
         buttonType="button"
-        handleClick={goToPreviousPage}
+        handleClick={getToPrevious}
       />
       <ul className="pagination-index">
         {Array.from({ length: pageCount }, (v, k) => k + 1).map((page) => (
-          <>
-            <li
-              className={activePage === page
-                ? 'paginate-list active-page' : 'paginate-list'}
-              key={page}
-              onClick={() => isActive(page)}
-              role="presentation"
-            >
-              {page}
-            </li>
-          </>
+          <li
+            className={activePage === page
+              ? 'paginate-list active-page' : 'paginate-list'}
+            key={page}
+            onClick={() => isActive(page)}
+            role="presentation"
+          >
+            {page}
+          </li>
         ))}
         {/* {Ellipsis} */}
       </ul>
       <ActionButton
-        buttonClass="pagebutton"
+        buttonClass="pagebutton second"
         buttonName="Next Page"
         buttonType="button"
-        handleClick={goToNextPage}
+        handleClick={getToNext}
       />
     </div>
   );

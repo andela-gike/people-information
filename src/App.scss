@@ -79,7 +79,7 @@
   display: flex;
   list-style: none;
   justify-content: space-between;
-  width: 30%;
+  // width: 30%;
 }
 
 .filter-section, .inner-cate{
@@ -437,6 +437,26 @@ only screen and (max-width: 760px),
   .pagebutton, .open-modal-btn {
     font-size: 14px;
     height: 25px
+  }
+
+  .pagebutton {
+    color: transparent;
+    width: 30px;
+    &::before {
+        content: "<";
+        color: grey;
+        margin-left: 3px;
+    }
+  }
+
+  .pagebutton.second {
+    color: transparent;
+    width: 30px;
+    &::before {
+        content: ">";
+        color: grey;
+        margin-left: 3px;
+    }
   }
   .modal {
     .modal-wrapper {
