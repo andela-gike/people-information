@@ -8,7 +8,7 @@ export interface Props {
 
   inputName?: string
 
-  handleChange?: (evt: any) => void
+  handleChange?: ((event: React.ChangeEvent<HTMLInputElement>) => void) | undefined
   labelledBy?: string
 }
 const InputComponent: React.FC<Props> = (

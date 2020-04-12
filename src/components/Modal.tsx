@@ -41,7 +41,7 @@ const ModalComponent: React.FC<Props> = ({
     () => handleClose(),
     [handleClose],
   );
-  const innerRef = useRef(null);
+  const innerRef = useRef<HTMLDivElement>(null);
   useOuterClickNotifier(handleOuterClick, innerRef);
 
   const [state, dispatch] = useReducer(reducer, initialUserInfo);

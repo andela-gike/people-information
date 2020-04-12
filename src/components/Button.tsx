@@ -8,7 +8,7 @@ export interface Props {
   /**  Specify the button type */
   buttonType: 'button' | 'submit',
   /** Handle click event in button */
-  handleClick?: () => void
+  handleClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) | undefined
 }
 const ButtonComponent: React.FC<Props> = (
   {
